@@ -1,17 +1,27 @@
 const initialState = {
-  age: 20
+  age: 20,
+  history: []
 };
 
 const reducer = (state = initialState, action) => {
-  const newState = { ...state };
-  if (action.type === "AGE_UP") {
-    newState.age++;
-  }
+  switch (action.type) {
+    case "AGE_UP":
+      return {
+        ...state,
+        age: state.age + action.value,
+        history: state.history.concat({ age: state.age - action.value })
+      };
 
-  if (action.type === "AGE_DOWN") {
-    newState.age--;
+    case "AGE_DOWN":
+      return {
+        ...state,
+        age: state.age - action.value,
+        history: state.history.concat({ age: state.age - action.value })
+      };
+
+    default:
+      return state;
   }
-  return newState;
 };
 
 export default reducer;

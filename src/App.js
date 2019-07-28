@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
+// import css
+import "./App.css";
+
 class App extends Component {
   //   state = {
   //     age: 20
@@ -23,11 +26,20 @@ class App extends Component {
   render() {
     return (
       <div>
-        <div>
+        <div className="age">
           Age : <span>{this.props.age}</span>
         </div>
         <button onClick={this.props.onAgeUp}>Age Up</button>
-        <button onClick={this.props.onAgeDown}>Age Up</button>
+        <button onClick={this.props.onAgeDown}>Age Down</button>
+        <hr />
+        <div>
+          <h3>History</h3>
+          <ul>
+            {this.props.history.map(element => (
+              <li className="historyItem">{element.age}</li>
+            ))}
+          </ul>
+        </div>
       </div>
     );
   }
@@ -35,14 +47,15 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    age: state.age
+    age: state.age,
+    history: state.history
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAgeUp: () => dispatch({ type: "AGE_UP" }),
-    onAgeDown: () => dispatch({ type: "AGE_DOWN" })
+    onAgeUp: () => dispatch({ type: "AGE_UP", value: 1 }),
+    onAgeDown: () => dispatch({ type: "AGE_DOWN", value: 1 })
   };
 };
 
